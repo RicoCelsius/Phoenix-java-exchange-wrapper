@@ -1,5 +1,7 @@
 package org.phoenix;
 
+import org.phoenix.exchanges.KrakenFutures;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.http.HttpRequest;
@@ -11,22 +13,17 @@ import static java.time.temporal.ChronoUnit.SECONDS;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) throws URISyntaxException {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
 
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(new URI("https://postman-echo.com/get"))
-                .timeout(Duration.of(10, SECONDS))
-                .GET()
-                .build();
-
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
+        KrakenFutures krakenFutures = new KrakenFutures("apiKey", "apiSecret");
+        try {
+            String response = krakenFutures.createLimitOrder("BTCUSD", "buy", "10000", "1000");
+            System.out.println(response);
         }
+        catch (Exception e) {
+            e.printStackTrace();
+
+
 
 
     }
-}
+}}
